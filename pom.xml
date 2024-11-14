@@ -88,7 +88,23 @@
 			<version>8.3.0</version>
 		</dependency>
 
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core &ndash;&gt;-->
+		<!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>8.0.1.Final</version>
+		</dependency>
+
+
+
+		<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core &ndash;&gt;-->
 <!--		<dependency>-->
 <!--			<groupId>org.hibernate.orm</groupId>-->
 <!--			<artifactId>hibernate-core</artifactId>-->

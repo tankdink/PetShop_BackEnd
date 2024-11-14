@@ -3,6 +3,7 @@ package com.Hello.Pet_Shop.controller;
 import com.Hello.Pet_Shop.auth.AuthenticationRequest;
 import com.Hello.Pet_Shop.auth.AuthenticationResponse;
 import com.Hello.Pet_Shop.entity.User;
+import com.Hello.Pet_Shop.exceptions.CustomBadCredentialsException;
 import com.Hello.Pet_Shop.exceptions.ResourceNotFoundException;
 import com.Hello.Pet_Shop.mapper.UserMapper;
 import com.Hello.Pet_Shop.services.jwt.JwtService;
@@ -38,15 +39,20 @@ public class AuthenticationController
 
     //Authenticate
     @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticaionToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception
+    public ResponseEntity<?> createAuthenticaionToken(@RequestBody AuthenticationRequest authenticationRequest) throws CustomBadCredentialsException
     {
+
+        User user = userDetailsServicesImpl.getUserByEmail(authenticationRequest.getEmail());
+        if (user == null) {
+            throw new CustomBadCredentialsException("Wrong email or password!");
+        }
         try
         {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),authenticationRequest.getPassword()));
         } catch (BadCredentialsException e)
         {
             e.printStackTrace();
-            throw new Exception("Invalid email or password!",e);
+            throw new CustomBadCredentialsException("Wrong email or password!");
         }
 
         //Custom login here
@@ -59,9 +65,16 @@ public class AuthenticationController
     //Get user logged-in information
     @GetMapping("/loggedIn-data")
     public ResponseEntity<?> getLoggedInUserData() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDetails userDetails = null;
+        try {
+            userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (ClassCastException e) {
+            throw new ResourceNotFoundException("Please logged in to use our services!");
+        }
+
         if (userDetails == null) {
-            throw new ResourceNotFoundException("User not found");
+            throw new ResourceNotFoundException("Failed when fetching data with this user");
         }
         User gettedLoggedInUserDto = userDetailsServicesImpl.getUserByEmail(userDetails.getUsername());
         return ResponseEntity.ok(UserMapper.mapToUserDto(gettedLoggedInUserDto));

@@ -3,6 +3,7 @@ package com.Hello.Pet_Shop.controller;
 import com.Hello.Pet_Shop.dto.UserDto;
 import com.Hello.Pet_Shop.entity.Role;
 import com.Hello.Pet_Shop.services.user.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserController
 
     //Add new User
     @PostMapping("/addUser")
-    public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto)
+    public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto)
     {
         UserDto savedUser = userService.createNewUser(userDto);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
@@ -67,9 +68,17 @@ public class UserController
         return ResponseEntity.ok(userList);
     }
 
+    //Update User password with ID
+    @PutMapping("/updateUserPassword/{id}")
+    public ResponseEntity<UserDto> updateUserPassword(@PathVariable Long id,@Valid @RequestBody UserDto userDto)
+    {
+        UserDto updatedUserObj = userService.updatePassword(id, userDto.getPassword());
+        return ResponseEntity.ok(updatedUserObj);
+    }
+
     //Update User with ID
     @PutMapping("/updateUser/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long id,@RequestBody UserDto updatedUser)
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id,@Valid @RequestBody UserDto updatedUser)
     {
         UserDto updatedUserObj = userService.updateUser(id, updatedUser);
         return ResponseEntity.ok(updatedUserObj);

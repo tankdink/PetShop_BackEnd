@@ -19,7 +19,12 @@ public interface UserService
 
     List<UserDto> getAllUser();
 
+
     UserDto updateUser(Long userID, UserDto updatedUser);
+
+    Boolean checkPasswordInput(String password);
+
+    UserDto updatePassword(Long userID, String password);
 
     void deleteUserByID(Long userID);
 

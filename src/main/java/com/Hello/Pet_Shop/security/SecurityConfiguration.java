@@ -37,8 +37,9 @@ public class SecurityConfiguration
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(EndpointsList.PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(EndpointsList.UPDATE_INFO_ENDPOINTS).hasAnyRole("USER","ACCOUNT_MANAGER","ADMIN")
+                        .requestMatchers(EndpointsList.MANAGE_ENDPOINTS).hasAnyRole("ACCOUNT_MANAGER","ADMIN")
                         .requestMatchers(EndpointsList.ADMIN_ENDPOINTS).hasRole("ADMIN")
-                        .requestMatchers(EndpointsList.USER_ENDPOINTS).hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
