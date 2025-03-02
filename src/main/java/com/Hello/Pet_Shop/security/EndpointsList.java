@@ -5,7 +5,8 @@ public class EndpointsList {
 
     public static final String[] PUBLIC_ENDPOINTS = {
             "/authen/login",
-            "/authen/loggedIn-data"
+            "/authen/loggedIn-data",
+            "/user/register"
 
     }; //FOR EVERYONE
 
@@ -18,13 +19,23 @@ public class EndpointsList {
     }; //For USER, ACCOUNT_MANAGER, ADMIN
 
     public static final String[] MANAGE_ENDPOINTS = {
-            "/user/addUser/**",
+            "/user/addUser",
+            "/user/updateRole/**",
             "/user/getUserById/**",
             "/user/getUserByFirstName/**",
             "/user/getUserByEmail/**",
-            "/user/getAllUser"
+            "/user/getAllUser",
+            "/user/getAllUserWithCase",
+            "/user/getUserByIDLike/**",
+            "/user/getUserByEmailLike/**",
+            "/user/getUserByRoleNameLike/**",
+            "/user/disable/**",
+            "/role/getAllRoles",
+            "/role/getRoleByName/**",
+            "/role/getRoleHasIdSmallerOrEqual/**"
 
     }; // FOR ACCOUNT_MANAGER, ADMIN
+
 
 
     public static final String[] ADMIN_ENDPOINTS = {

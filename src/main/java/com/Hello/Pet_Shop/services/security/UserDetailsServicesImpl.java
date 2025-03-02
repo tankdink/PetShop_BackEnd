@@ -22,11 +22,15 @@ public class UserDetailsServicesImpl implements UserDetailsService
     public UserDetails loadUserByUsername(String email) throws CustomBadCredentialsException, ResourceNotFoundException
     {
         User gettedUser = userRepository.findByEmail(email);
-        if (gettedUser == null) throw new ResourceNotFoundException("Your email has been change by admin! Please log in again or contact us for more information!");
+
+        if (gettedUser == null) throw new ResourceNotFoundException("Please logged in to use our services!");
+
+        //Account isEnable?
         boolean isEnable = gettedUser.isEnabled();
         if (!isEnable) {
             throw new CustomBadCredentialsException("Your account has been deactivated! Please contatct us for more information!");
         }
+
         return new org.springframework.security.core.userdetails
                 .User(gettedUser.getEmail(),
                       gettedUser.getPassword(),

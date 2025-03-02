@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -36,4 +38,17 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+
+    // New column for birthday
+    @Column(name = "birthday")
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
+
+    // New column for phone
+    @Column(name = "phone", nullable = true, length = 10)
+    private String phone;
+
+    // 0: male, 1: female
+    @Column(name = "gender", nullable = true, columnDefinition = "boolean default true")
+    private boolean gender;
 }

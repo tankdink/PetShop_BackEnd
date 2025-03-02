@@ -46,6 +46,7 @@ public class AuthenticationController
         if (user == null) {
             throw new CustomBadCredentialsException("Wrong email or password!");
         }
+
         try
         {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),authenticationRequest.getPassword()));
@@ -55,9 +56,9 @@ public class AuthenticationController
             throw new CustomBadCredentialsException("Wrong email or password!");
         }
 
-        //Custom login here
-
+        //Custom login in this load
         final UserDetails userDetails = userDetailsServicesImpl.loadUserByUsername(authenticationRequest.getEmail());
+
         final String jwt = jwtService.generateToken(userDetails.getUsername());
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }

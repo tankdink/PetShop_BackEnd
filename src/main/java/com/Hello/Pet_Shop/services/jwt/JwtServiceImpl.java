@@ -70,7 +70,7 @@ public class JwtServiceImpl implements JwtService
             claims.put("firstName", user.getFirstName());
             claims.put("lastName", user.getLastName());
             claims.put("email", user.getEmail());
-            claims.put("role", user.getRole().getRole_id());
+            claims.put("role", user.getRole().getId());
         }
         else throw new ResourceNotFoundException("User is not exists with given email: " +email);
         return createToken(claims, email);
@@ -81,7 +81,7 @@ public class JwtServiceImpl implements JwtService
         return Jwts.builder().setClaims(claims)
                              .setSubject(subject)
                              .setIssuedAt(new Date(System.currentTimeMillis()))
-                             .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 1)) //1000 * 60 * 60 * 1: 1 hour
+                             .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 1 )) //1000 * 60 * 60 * 1: 1 hour
                              .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 }

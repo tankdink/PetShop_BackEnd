@@ -45,7 +45,8 @@ public class JwtRequestFilter extends OncePerRequestFilter
             } catch (ExpiredJwtException e) {
                 response.setStatus(HttpStatus.FORBIDDEN.value());
                 response.getWriter().write("Session is expired! Please log in again!");
-                return;           }
+                return;
+            }
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null)

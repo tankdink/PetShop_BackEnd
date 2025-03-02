@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 public class Role
 {
     @Id
-    private Long role_id;
+    @Column(name = "role_id")
+    private Long id;
 
     @Column(name = "name", unique = true)
     private String name;

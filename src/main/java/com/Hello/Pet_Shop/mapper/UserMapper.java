@@ -3,7 +3,9 @@ package com.Hello.Pet_Shop.mapper;
 import com.Hello.Pet_Shop.dto.UserDto;
 import com.Hello.Pet_Shop.entity.User;
 
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class UserMapper
@@ -27,6 +29,15 @@ public class UserMapper
     {
         boolean isEnable = userDto.isEnable();
 
+        Date birthday = null;
+        try {
+
+            birthday = new SimpleDateFormat("yyyy-MM-dd").parse("2022-01-01");
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+        }
+
         return new User
         (
             userDto.getId(),
@@ -35,7 +46,8 @@ public class UserMapper
             userDto.getEmail(),
             userDto.getPassword(),
             isEnable,
-            userDto.getRole()
+            userDto.getRole(),birthday,"0328363762",true
+
         );
     }
 
